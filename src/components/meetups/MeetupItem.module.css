@@ -1,0 +1,24 @@
+.card {
+  background-color: #32d1ce;
+  border-radius: 4px;
+  width: 20rem;
+  text-align: center;
+  margin: 0 auto;
+  padding: 5px;
+  text-decoration: none;
+  list-style: none;
+  margin-top: 30px;
+}
+
+.image {
+  height: 200px;
+  width: 100%;
+}
+.btnToFav {
+  padding: 10px;
+  border: 1px solid #3cbbfa;
+}
+
+.btnToFav:hover {
+  background-color: #38aee8;
+}
