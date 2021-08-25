@@ -5,8 +5,11 @@ import "./index.css";
 import App from "./App/App";
 
 ReactDom.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
     <App />
-  </React.StrictMode>,
+  </>,
+
+  // </React.StrictMode>
   document.getElementById("root")
 );
