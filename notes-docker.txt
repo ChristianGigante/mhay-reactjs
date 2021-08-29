@@ -1,0 +1,119 @@
+*Dockerfile
+From node
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+ENV REACT_APP_NAME=myName
+EXPOSE 3000
+CMD ["npm", "start"]
+
+*running a container
+>>>docker run -v <projectCurrentDirectory>:/app/src -d -p 3000:3000 --name react-app react-image
+in powershell = ${pwd}\src
+in cmd = %cd%\src
+in linux and ios = $(pwd)/src
+
+*to fix error issues on running above line
+>>>docker run -e CHOKIDAR_USEPOLLING=true -v <projectCurrentDirectory>:/app/src -d -p 3000:3000 --name react-app react-image
+*readOnlyByMount
+>>>docker run -e CHOKIDAR_USEPOLLING=true -v <projectCurrentDirectory>:/app/src:ro -d -p 3000:3000 --name react-app react-image
+
+*halt or killing the container
+>>>docker rm react-app -f
+>>>docker ps
+
+>>>docker exec -it react-app bash
+
+
+*create a docker image
+>>>docker build . -t <imageName>
+or
+*build docker image
+>>>docker build -t <imageName> .<dot for current dir>
+*docker image list
+>>>docker image ls
+
+*run docker image
+>>>docker run <imageName>
+
+>>>docker ps
+
+*open terminal container
+>>>docker exec -it <containerID or ImageName> <sh for powershell and bash for bash>
+>>>exit to close terminal
+
+*pass a .env fileon running 
+>>>docker run --env-file ./.env -v %cd%\src -d -p 3000:3000 --name react-app react-image
+
+
+*docker-compose.yml
+
+*docker remove image using id
+docker image rm bd22bb1881ab
+
+
+
+###docker steps
+1.Clone 
+>>>docker run --name repo alpine/git clone https://github.com/docker/getting-started.git
+2.build
+>>>docker build -t docker101tutorial .
+3.Run 
+>>>docker run -d -p 80:80 \ --name docker-tutorial docker101tutorial
+
+docker run -d -p 3000:3000 --name react-app reactjs-image
+*check running image
+>>>docker ps
+
+*check image list
+>>>docker ls
+
+
+*steps on running the app with docker after creating Dockerfile
+>>>docker build .
+*checking docker image list
+>>>docker image ls
+*delete docker image by imageId
+>>>docker image rm <imageId>
+*create docker image with -t flag for specifying image names
+>>>docker build -t <imageName>
+*create docker container with -d flag
+>>>docker run -d -p 3000:3000 --name <containerName> <imageName>
+*kill a container
+>>>docker rm react-app -f
+
+*open container 
+>>>docker exec -it react-app bash
+*preview a file content
+>>>cat <fileName>
+
+*v-bind commands
+>>>docker run -v dirLocalDirectory:containerDirectory -d -p 3000:3000 --name <containerName> <imageName>
+>>>docker run -v %cd%\src:/app/src -d -p 3000:3000 --name <containerName> <imageName>
+
+*fix windows issue not update realtime
+>>>docker run -e CHOKIDAR_USEPOLLING=true -v C:\chan\personal\mhay-reactjs\src:/app/src -d -p 3000:3000 --name react-app reactjs-image
+
+*set container read only or  not adding any file
+>>>docker run -e CHOKIDAR_USEPOLLING=true -v C:\chan\personal\mhay-reactjs\src:/app/src:ro -d -p 3000:3000 --name react-app reactjs-image
+
+>>>docker run --env-file ./.env -v C:\chan\personal\mhay-reactjs\src:/app/src:ro -d -p 3000:3000 --name react-app reactjs-image
+
+
+*bring the container up using compose
+>>>docker-compose up -d
+*bring down the container using compose
+>>>docker-compose down -d
+
+###create a 2 environment for docker (dev and production)
+*changing dockerfile with .dev extension
+>>>docker build -f dockerfile.dev .
+
+
+*running two docker-compose (dev and production)
+>>>docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d --build
+
+
+*passing a multi-stage flag
+>>>docker build --target build -f Dockerfile.prod -t multi-stage-example .
