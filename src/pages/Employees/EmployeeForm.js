@@ -43,7 +43,8 @@ const initialFieldValues = {
   isPermanent: false,
 };
 
-export default function EmployeeForm() {
+export default function EmployeeForm(props) {
+  const { addOrEdit, recordForEdit } = props;
   //   const [values, setValues, handleInputChange] = useState(initialFieldValues);
 
   //   const classes = useStyle();
@@ -79,7 +80,7 @@ export default function EmployeeForm() {
     setErrors({
       ...temp,
     });
-    if (fieldValues == values)
+    if (fieldValues === values)
       return Object.values(temp).every((x) => x === "");
   };
 
@@ -90,10 +91,19 @@ export default function EmployeeForm() {
     e.preventDefault();
     if (validate()) {
       // window.alert("testing...");
-      employeeService.insertEmployee(values);
-      resetForm();
+      // employeeService.insertEmployee(values);
+      // resetForm();
+      addOrEdit(values, resetForm);
     }
   };
+
+  useEffect(() => {
+    if (recordForEdit !== null) {
+      setValues({
+        ...recordForEdit,
+      });
+    }
+  }, [recordForEdit]);
 
   return (
     <Form onSubmit={handleSubmit}>
